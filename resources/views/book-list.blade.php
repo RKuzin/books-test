@@ -9,7 +9,7 @@
             <li class="book books__item">
                 <h3 class="book__title">{!! $book['title'] !!}</h3>
                 <p class="book__description">{!! $book['description'] !!}</p>
-                <p class="book__realise-date">Год издания: {!! $book['realise-date'] !!}</p>
+                <p class="book__release-date">Год издания: {!! $book['release-date'] !!}</p>
                 <p class="book__authors">Автор: {!! $book['authors'] !!}</p>
             </li>
         @endforeach

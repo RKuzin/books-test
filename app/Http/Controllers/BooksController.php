@@ -20,14 +20,9 @@ class BooksController extends Controller
         foreach ($books as $book) {
             $data[$i]['title'] = $book->title;
             $data[$i]['description'] = $book->description;
-            $data[$i]['realise-date'] = $book->realise_date;
+            $data[$i]['release-date'] = $book->release_date;
             $authors = $book->authors()->orderBy('surname')->get();
-            // извлекаем все значения коллекции по указанным ключам и соединяем имя с фамилией:
-            $authors = $authors->pluck('name', 'surname')->map(function ($item, $key) {
-                return $item . " " . $key;
-            });
-            $authors = $authors->flatten()->implode(', ');
-            $data[$i]['authors'] = $authors;
+            $data[$i]['authors'] = Book::authorsList($authors);
             $i++;
         }
         return view('book-list')->with('books', $data);

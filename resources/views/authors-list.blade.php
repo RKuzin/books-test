@@ -12,7 +12,7 @@
                     <ul class="author__books-list">
                         @foreach($author['books'] as $book)
                             <li class="author__books-item">
-                                {!!$book->title." (".$book->realise_date.")"!!}
+                                {!!$book->title." (".$book->release_date.")"!!}
                             </li>
                         @endforeach
                     </ul>

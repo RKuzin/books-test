@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Author;
+use App\Book;
+use App\Http\Resources\BookResource;
+use App\Http\Resources\BooksResource;
 use Illuminate\Http\Request;
 
-class AuthorsController extends Controller
+class BookResourceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,16 +16,8 @@ class AuthorsController extends Controller
      */
     public function index()
     {
-        $authors = Author::orderBy('surname', 'ASC')->get();
-        $i = 0;
-        $data = array();
-        foreach ($authors as $author) {
-            $data[$i]['fullname'] = $author->name." ".$author->surname;
-            $books = $author->books()->orderBy('realise_date')->get();
-            $data[$i]['books'] = $books;
-            $i++;
-        }
-        return view('authors-list')->with('authors', $data);
+       // dd(Book::all());
+        return BookResource::collection(Book::all());
     }
 
     /**
@@ -53,9 +47,9 @@ class AuthorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        //
+        return new BookResource($book);
     }
 
     /**
