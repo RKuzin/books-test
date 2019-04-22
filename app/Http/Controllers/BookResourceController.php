@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\Http\Resources\BookResource;
-use App\Http\Resources\BooksResource;
 use Illuminate\Http\Request;
 
 class BookResourceController extends Controller
@@ -38,7 +37,15 @@ class BookResourceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $book = new Book([
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'release_date' => $request->get('releaseDate'),
+        ]);
+
+        $book->save();
+
+        return response()->json('successfully added');
     }
 
     /**
@@ -60,7 +67,8 @@ class BookResourceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id);
+        return response()->json($book);
     }
 
     /**
@@ -72,7 +80,11 @@ class BookResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $book = Book::find($id);
+
+        $book->update($request->all());
+
+        return response()->json('successfully updated');
     }
 
     /**
@@ -83,6 +95,9 @@ class BookResourceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::find($id);
+        $book->delete();
+
+        return response()->json('successfully deleted');
     }
 }

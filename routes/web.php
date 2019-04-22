@@ -19,3 +19,23 @@ Route::get('/', function () {
 Route::resource('books', 'BooksController');
 Route::resource('authors', 'AuthorsController');
 Route::resource('/api/v1/books', 'BookResourceController')->only(['index', 'show']);
+
+Route::get('/posts', function () {
+    return view('dashboard');
+});
+
+Auth::routes();
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
+
+    Route::get('/', function () {
+        return view('dashboard');      // dashboard - main admin page
+    });
+
+    Route::get('/{any}', function ($any) {
+        // any other url, subfolders also
+        return view('dashboard');
+    })->where('any', '.*');
+
+});
+
